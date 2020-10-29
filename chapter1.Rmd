@@ -5,9 +5,8 @@
 
 ```{r}
 # This is a so-called "R chunk" where you can write R code.
+#I expect to learn to use these programs.I'm feeling good. Heard about this course from my supervisor.
+# https://github.com/villetur20/IODS-project.git
 
-date()
 
-```
-The text continues here.
 

@@ -41,3 +41,42 @@ XX <- read.table("C:/Users/ville/OneDrive/Työpöytä/Open science kurssi 2020/I
 head(XX)
 str(XX)
 dim(XX)
+
+AA <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt", sep = ",", header = TRUE)
+str(AA)
+dim(AA)
+# str command shows that the data has 7 variables and 166 rows.There are character(gender), integer(age/points) and numeric (the rest of variables) in the data.
+library(ggplot2)
+library(GGally)
+X <- ggpairs(AA)
+X
+D <- ggpairs(AA, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap("facethist", bins = 20)))
+D
+# this plot opens graphical overview of the data (e.g. distribution) and numerical values like correlation (i.e. how much the variables are related to one another. 0= no correlation, closer to 1 or -1 means the variables are more related)
+# for example it seems that attitude is more related to points than age.
+
+SS <- lm(points ~ attitude + stra + surf, data = AA)
+summary(SS)
+
+FF <- lm(points ~ attitude, data = AA)
+summary(FF)
+# I choose attitude, stra and surf as explanatory variables. P values for stra and surf had p>0.05 and thus low statistical relation with these variables and points. 
+# These two were excluded and simple regression with points and attitude are shown below.
+# fitted model: there seems to be statictically significant (low P value) relation between points and attitude.
+# I learnt the following about R-squared from the internet today:
+# R-squared is the percentage of the dependent variable variation that a linear model explains.
+#100% represents a model that explains all of the variation in the response variable around its mean.
+# Adjusted R-squared provides the same information as R-squared but adjusts for the number of terms in the model.
+
+par(mfrow = c(2,2))
+plot(SS, which = c(1,2,5))
+
+E <- lm(points ~ attitude + stra + surf, data = AA)
+
+par(mfrow = c(2,2))
+plot(E, which = c(1,2,5))
+
+# Q-Q plot shows that boht genders have same distribution.
+# residuals Vs fitted: Residuals = Observed value – Fitted value. Y-axis= residual, X-axis= fitted values. Unwanted patterns of this plot = we can't trust the test. The should't be patterns. You shouldn't be able to predict the residual with fitted value, if the data is truly random.
+# residuals vs leverage: can also be used to detect heteroskedasticity and non-linearity. Second, points with high leverage may be influential: that is, deleting them would change the model a lot. Points outside Cook's distance have high influence.
+# Now there are few points outside Cook's distance, that could affect leverage and the model.

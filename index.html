@@ -436,14 +436,105 @@ summary {
 <div id="TOC">
 <ul>
 <li><a href="#introduction-to-open-data-science---course-project">Introduction to Open Data Science - Course Project</a></li>
+<li><a href="#next-keeping-only-7-variables">next keeping only 7 variables</a></li>
+<li><a href="#here-im-opening-the-data-from-the-internet.-sep-tells-r-the-seperator-used-in-the-data-header-means-there-is-a-header.">Here I’m opening the data from the internet. Sep tells R the seperator used in the data, header means there is a header.</a></li>
+<li><a href="#str-command-shows-that-the-data-has-7-variables-and-166-rows.there-are-charactergender-integeragepoints-and-numeric-the-rest-of-variables-in-the-data.">str command shows that the data has 7 variables and 166 rows.There are character(gender), integer(age/points) and numeric (the rest of variables) in the data.</a></li>
+<li><a href="#library-commands-tell-r-to-open-libraries-for-the-plot-commands.-first-the-ggplot2-and-ggally-packages-need-to-be-installed.">Library commands tell R to open libraries for the plot commands. First the ggplot2 and GGally packages need to be installed.</a></li>
+<li><a href="#this-plot-opens-graphical-overview-of-the-data-e.g.-distribution-and-numerical-values-like-correlation-i.e.-how-much-the-variables-are-related-to-one-another.-0-no-correlation-closer-to-1-or--1-means-the-variables-are-more-related">this plot opens graphical overview of the data (e.g. distribution) and numerical values like correlation (i.e. how much the variables are related to one another. 0= no correlation, closer to 1 or -1 means the variables are more related)</a></li>
+<li><a href="#for-example-it-seems-that-attitude-is-more-related-to-points-than-age.">for example it seems that attitude is more related to points than age.</a></li>
+<li><a href="#i-choose-attitude-stra-and-surf-as-explanatory-variables.-p-values-for-stra-and-surf-had-p0.05-and-thus-low-statistical-relation-with-these-variables-and-points.">I choose attitude, stra and surf as explanatory variables. P values for stra and surf had p&gt;0.05 and thus low statistical relation with these variables and points.</a></li>
+<li><a href="#these-two-were-excluded-and-simple-regression-with-points-and-attitude-are-shown-below.">These two were excluded and simple regression with points and attitude are shown below.</a></li>
+<li><a href="#fitted-model-there-seems-to-be-statictically-significant-low-p-value-relation-between-points-and-attitude.">fitted model: there seems to be statictically significant (low P value) relation between points and attitude.</a></li>
+<li><a href="#i-learnt-the-following-about-r-squared-from-the-internet-today">I learnt the following about R-squared from the internet today:</a></li>
+<li><a href="#r-squared-is-the-percentage-of-the-dependent-variable-variation-that-a-linear-model-explains.">R-squared is the percentage of the dependent variable variation that a linear model explains.</a></li>
+<li><a href="#q-q-plot-shows-that-both-genders-have-same-distribution.">Q-Q plot shows that both genders have same distribution.</a></li>
+<li><a href="#residuals-vs-fitted-residuals-observed-value-fitted-value.-y-axis-residual-x-axis-fitted-values.-unwanted-patterns-of-this-plot-we-cant-trust-the-test.-the-shouldt-be-patterns.-you-shouldnt-be-able-to-predict-the-residual-with-fitted-value-if-the-data-is-truly-random.">residuals Vs fitted: Residuals = Observed value – Fitted value. Y-axis= residual, X-axis= fitted values. Unwanted patterns of this plot = we can’t trust the test. The should’t be patterns. You shouldn’t be able to predict the residual with fitted value, if the data is truly random.</a></li>
+<li><a href="#residuals-vs-leverage-can-also-be-used-to-detect-heteroskedasticity-and-non-linearity.-second-points-with-high-leverage-may-be-influential-that-is-deleting-them-would-change-the-model-a-lot.-points-outside-cooks-distance-have-high-influence.">residuals vs leverage: can also be used to detect heteroskedasticity and non-linearity. Second, points with high leverage may be influential: that is, deleting them would change the model a lot. Points outside Cook’s distance have high influence.</a></li>
+<li><a href="#now-there-are-few-points-outside-cooks-distance-that-could-affect-leverage-and-the-model.">Now there are few points outside Cook’s distance, that could affect leverage and the model.</a></li>
 <li><a href="#about-the-project">About the project</a></li>
-<li><a href="#insert-chapter-2-title-here">Insert chapter 2 title here</a></li>
+<li><a href="#week2-ville-turppo">Week2 Ville Turppo</a></li>
+<li><a href="#str-command-shows-that-the-data-has-7-variables-and-166-rows.there-are-charactergender-integeragepoints-and-numeric-the-rest-of-variables-in-the-data.-1">str command shows that the data has 7 variables and 166 rows.There are character(gender), integer(age/points) and numeric (the rest of variables) in the data.</a></li>
+<li><a href="#library-commands-tell-r-to-open-libraries-for-the-plot-commands.-first-the-ggplot2-and-ggally-packages-need-to-be-installed.-1">Library commands tell R to open libraries for the plot commands. First the ggplot2 and GGally packages need to be installed.</a></li>
+<li><a href="#this-plot-opens-graphical-overview-of-the-data-e.g.-distribution-and-numerical-values-like-correlation-i.e.-how-much-the-variables-are-related-to-one-another.-0-no-correlation-closer-to-1-or--1-means-the-variables-are-more-related-1">this plot opens graphical overview of the data (e.g. distribution) and numerical values like correlation (i.e. how much the variables are related to one another. 0= no correlation, closer to 1 or -1 means the variables are more related)</a></li>
+<li><a href="#for-example-it-seems-that-attitude-is-more-related-to-points-than-age.-1">for example it seems that attitude is more related to points than age.</a></li>
+<li><a href="#i-choose-attitude-stra-and-surf-as-explanatory-variables.-p-values-for-stra-and-surf-had-p0.05-and-thus-low-statistical-relation-with-these-variables-and-points.-1">I choose attitude, stra and surf as explanatory variables. P values for stra and surf had p&gt;0.05 and thus low statistical relation with these variables and points.</a></li>
+<li><a href="#these-two-were-excluded-and-simple-regression-with-points-and-attitude-are-shown-below.-1">These two were excluded and simple regression with points and attitude are shown below.</a></li>
+<li><a href="#fitted-model-there-seems-to-be-statictically-significant-low-p-value-relation-between-points-and-attitude.-1">fitted model: there seems to be statictically significant (low P value) relation between points and attitude.</a></li>
+<li><a href="#i-learnt-the-following-about-r-squared-from-the-internet-today-1">I learnt the following about R-squared from the internet today:</a></li>
+<li><a href="#r-squared-is-the-percentage-of-the-dependent-variable-variation-that-a-linear-model-explains.-1">R-squared is the percentage of the dependent variable variation that a linear model explains.</a></li>
+<li><a href="#q-q-plot-shows-that-both-genders-have-same-distribution.-1">Q-Q plot shows that both genders have same distribution.</a></li>
+<li><a href="#residuals-vs-fitted-residuals-observed-value-fitted-value.-y-axis-residual-x-axis-fitted-values.-unwanted-patterns-of-this-plot-we-cant-trust-the-test.-the-shouldt-be-patterns.-you-shouldnt-be-able-to-predict-the-residual-with-fitted-value-if-the-data-is-truly-random.-1">residuals Vs fitted: Residuals = Observed value – Fitted value. Y-axis= residual, X-axis= fitted values. Unwanted patterns of this plot = we can’t trust the test. The should’t be patterns. You shouldn’t be able to predict the residual with fitted value, if the data is truly random.</a></li>
+<li><a href="#residuals-vs-leverage-can-also-be-used-to-detect-heteroskedasticity-and-non-linearity.-second-points-with-high-leverage-may-be-influential-that-is-deleting-them-would-change-the-model-a-lot.-points-outside-cooks-distance-have-high-influence.-1">residuals vs leverage: can also be used to detect heteroskedasticity and non-linearity. Second, points with high leverage may be influential: that is, deleting them would change the model a lot. Points outside Cook’s distance have high influence.</a></li>
+<li><a href="#now-there-are-few-points-outside-cooks-distance-that-could-affect-leverage-and-the-model.-1">Now there are few points outside Cook’s distance, that could affect leverage and the model.</a></li>
 </ul>
 </div>
 
 <hr />
 <div id="introduction-to-open-data-science---course-project" class="section level1">
 <h1>Introduction to Open Data Science - Course Project</h1>
+<p>Week 2 Data wrangling + Analysis</p>
+<p>Wrangling</p>
+<p>#opening the data. test2 &lt;- read.table(“<a href="http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt" class="uri">http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.txt</a>”, sep=&quot;, header=TRUE) dim(test2) # row and columns #checking data struckture str(test2) #str shows compactly the data</p>
+<p>#Here making the combination variables. deep_questions &lt;- c(“D03”, “D11”, “D19”, “D27”, “D07”, “D14”, “D22”, “D30”,“D06”, “D15”, “D23”, “D31”) surface_questions &lt;- c(“SU02”,“SU10”,“SU18”,“SU26”, “SU05”,“SU13”,“SU21”,“SU29”,“SU08”,“SU16”,“SU24”,“SU32”) strategic_questions &lt;- c(“ST01”,“ST09”,“ST17”,“ST25”,“ST04”,“ST12”,“ST20”,“ST28”) install.packages(“dplyr”) library(dplyr)</p>
+<p>deep_columns &lt;- select(test2, one_of(deep_questions)) test2$deep &lt;- rowMeans(deep_columns)</p>
+<p>surface_columns &lt;- select(test2, one_of(surface_questions)) test2$surf &lt;- rowMeans(surface_columns)</p>
+<p>strategic_columns &lt;- select(test2, one_of(strategic_questions)) test2$stra &lt;- rowMeans(strategic_columns)</p>
+</div>
+<div id="next-keeping-only-7-variables" class="section level1">
+<h1>next keeping only 7 variables</h1>
+<p>columns &lt;- c(“gender”,“Age”,“Attitude”, “deep”, “stra”, “surf”, “Points”) end33 &lt;- select(test2, one_of(columns))</p>
+<p>colnames(end33) #calculting the means. end33<span class="math inline">\(attitude &lt;- end33\)</span>Attitude / 10 end33<span class="math inline">\(straX &lt;- end33\)</span>stra / 8 end33<span class="math inline">\(deepX &lt;- end33\)</span>deep / 12 end33<span class="math inline">\(surfX &lt;- end33\)</span>surf / 12 end33 &lt;- filter(end33, Points &gt; 0)</p>
+<p>tolpat &lt;- c(“gender”,“Age”,“attitude”, “deepX”, “straX”, “surfX”, “Points”) final4 &lt;- select(end33, one_of(tolpat)) dim(final4)</p>
+<p>final4 #Saving my work write.table(final4, file = “C:/Users/ville/OneDrive/Työpöytä/Open science kurssi 2020/IODS-project/data/week2.csv”, sep = “) #opening my work. XX &lt;- read.table(”C:/Users/ville/OneDrive/Työpöytä/Open science kurssi 2020/IODS-project/data/week2.csv“, sep =”) head(XX) str(XX) dim(XX)</p>
+<p>Analysis</p>
+</div>
+<div id="here-im-opening-the-data-from-the-internet.-sep-tells-r-the-seperator-used-in-the-data-header-means-there-is-a-header." class="section level1">
+<h1>Here I’m opening the data from the internet. Sep tells R the seperator used in the data, header means there is a header.</h1>
+<p>AA &lt;- read.table(“<a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt" class="uri">http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt</a>”, sep = “,”, header = TRUE) str(AA) dim(AA)</p>
+</div>
+<div id="str-command-shows-that-the-data-has-7-variables-and-166-rows.there-are-charactergender-integeragepoints-and-numeric-the-rest-of-variables-in-the-data." class="section level1">
+<h1>str command shows that the data has 7 variables and 166 rows.There are character(gender), integer(age/points) and numeric (the rest of variables) in the data.</h1>
+<p>library(ggplot2) library(GGally)</p>
+</div>
+<div id="library-commands-tell-r-to-open-libraries-for-the-plot-commands.-first-the-ggplot2-and-ggally-packages-need-to-be-installed." class="section level1">
+<h1>Library commands tell R to open libraries for the plot commands. First the ggplot2 and GGally packages need to be installed.</h1>
+<p>X &lt;- ggpairs(AA) X D &lt;- ggpairs(AA, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap(“facethist”, bins = 20))) D</p>
+</div>
+<div id="this-plot-opens-graphical-overview-of-the-data-e.g.-distribution-and-numerical-values-like-correlation-i.e.-how-much-the-variables-are-related-to-one-another.-0-no-correlation-closer-to-1-or--1-means-the-variables-are-more-related" class="section level1">
+<h1>this plot opens graphical overview of the data (e.g. distribution) and numerical values like correlation (i.e. how much the variables are related to one another. 0= no correlation, closer to 1 or -1 means the variables are more related)</h1>
+</div>
+<div id="for-example-it-seems-that-attitude-is-more-related-to-points-than-age." class="section level1">
+<h1>for example it seems that attitude is more related to points than age.</h1>
+<p>SS &lt;- lm(points ~ attitude + stra + surf, data = AA) summary(SS) FF &lt;- lm(points ~ attitude, data = AA) summary(FF)</p>
+</div>
+<div id="i-choose-attitude-stra-and-surf-as-explanatory-variables.-p-values-for-stra-and-surf-had-p0.05-and-thus-low-statistical-relation-with-these-variables-and-points." class="section level1">
+<h1>I choose attitude, stra and surf as explanatory variables. P values for stra and surf had p&gt;0.05 and thus low statistical relation with these variables and points.</h1>
+</div>
+<div id="these-two-were-excluded-and-simple-regression-with-points-and-attitude-are-shown-below." class="section level1">
+<h1>These two were excluded and simple regression with points and attitude are shown below.</h1>
+</div>
+<div id="fitted-model-there-seems-to-be-statictically-significant-low-p-value-relation-between-points-and-attitude." class="section level1">
+<h1>fitted model: there seems to be statictically significant (low P value) relation between points and attitude.</h1>
+</div>
+<div id="i-learnt-the-following-about-r-squared-from-the-internet-today" class="section level1">
+<h1>I learnt the following about R-squared from the internet today:</h1>
+</div>
+<div id="r-squared-is-the-percentage-of-the-dependent-variable-variation-that-a-linear-model-explains." class="section level1">
+<h1>R-squared is the percentage of the dependent variable variation that a linear model explains.</h1>
+<p>#100% represents a model that explains all of the variation in the response variable around its mean. # Adjusted R-squared provides the same information as R-squared but adjusts for the number of terms in the model. #plot command makes the following diagnostic plots and par command puts them on the same page.</p>
+<p>par(mfrow = c(2,2)) plot(SS, which = c(1,2,5)) E &lt;- lm(points ~ attitude + stra + surf, data = AA) par(mfrow = c(2,2)) plot(E, which = c(1,2,5))</p>
+</div>
+<div id="q-q-plot-shows-that-both-genders-have-same-distribution." class="section level1">
+<h1>Q-Q plot shows that both genders have same distribution.</h1>
+</div>
+<div id="residuals-vs-fitted-residuals-observed-value-fitted-value.-y-axis-residual-x-axis-fitted-values.-unwanted-patterns-of-this-plot-we-cant-trust-the-test.-the-shouldt-be-patterns.-you-shouldnt-be-able-to-predict-the-residual-with-fitted-value-if-the-data-is-truly-random." class="section level1">
+<h1>residuals Vs fitted: Residuals = Observed value – Fitted value. Y-axis= residual, X-axis= fitted values. Unwanted patterns of this plot = we can’t trust the test. The should’t be patterns. You shouldn’t be able to predict the residual with fitted value, if the data is truly random.</h1>
+</div>
+<div id="residuals-vs-leverage-can-also-be-used-to-detect-heteroskedasticity-and-non-linearity.-second-points-with-high-leverage-may-be-influential-that-is-deleting-them-would-change-the-model-a-lot.-points-outside-cooks-distance-have-high-influence." class="section level1">
+<h1>residuals vs leverage: can also be used to detect heteroskedasticity and non-linearity. Second, points with high leverage may be influential: that is, deleting them would change the model a lot. Points outside Cook’s distance have high influence.</h1>
+</div>
+<div id="now-there-are-few-points-outside-cooks-distance-that-could-affect-leverage-and-the-model." class="section level1">
+<h1>Now there are few points outside Cook’s distance, that could affect leverage and the model.</h1>
 </div>
 <div id="about-the-project" class="section level1">
 <h1>About the project</h1>
@@ -453,8 +544,8 @@ summary {
 # https://github.com/villetur20/IODS-project.git</code></pre>
 <hr />
 </div>
-<div id="insert-chapter-2-title-here" class="section level1">
-<h1>Insert chapter 2 title here</h1>
+<div id="week2-ville-turppo" class="section level1">
+<h1>Week2 Ville Turppo</h1>
 <p><em>Describe the work you have done this week and summarize your learning.</em></p>
 <ul>
 <li>Describe your work and results clearly.</li>
@@ -462,8 +553,53 @@ summary {
 <li>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</li>
 </ul>
 <pre class="r"><code>date()</code></pre>
-<pre><code>## [1] &quot;Thu Oct 29 21:11:36 2020&quot;</code></pre>
-<p>Here we go again…</p>
+<pre><code>## [1] &quot;Wed Nov 04 21:39:34 2020&quot;</code></pre>
+<p>Here we go again… # Here I’m opening the data from the internet. Sep tells R the seperator used in the data, header means there is a header.</p>
+<p>AA &lt;- read.table(“<a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt" class="uri">http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt</a>”, sep = “,”, header = TRUE) str(AA) dim(AA)</p>
+</div>
+<div id="str-command-shows-that-the-data-has-7-variables-and-166-rows.there-are-charactergender-integeragepoints-and-numeric-the-rest-of-variables-in-the-data.-1" class="section level1">
+<h1>str command shows that the data has 7 variables and 166 rows.There are character(gender), integer(age/points) and numeric (the rest of variables) in the data.</h1>
+<p>library(ggplot2) library(GGally)</p>
+</div>
+<div id="library-commands-tell-r-to-open-libraries-for-the-plot-commands.-first-the-ggplot2-and-ggally-packages-need-to-be-installed.-1" class="section level1">
+<h1>Library commands tell R to open libraries for the plot commands. First the ggplot2 and GGally packages need to be installed.</h1>
+<p>X &lt;- ggpairs(AA) X D &lt;- ggpairs(AA, mapping = aes(col = gender, alpha = 0.3), lower = list(combo = wrap(“facethist”, bins = 20))) D</p>
+</div>
+<div id="this-plot-opens-graphical-overview-of-the-data-e.g.-distribution-and-numerical-values-like-correlation-i.e.-how-much-the-variables-are-related-to-one-another.-0-no-correlation-closer-to-1-or--1-means-the-variables-are-more-related-1" class="section level1">
+<h1>this plot opens graphical overview of the data (e.g. distribution) and numerical values like correlation (i.e. how much the variables are related to one another. 0= no correlation, closer to 1 or -1 means the variables are more related)</h1>
+</div>
+<div id="for-example-it-seems-that-attitude-is-more-related-to-points-than-age.-1" class="section level1">
+<h1>for example it seems that attitude is more related to points than age.</h1>
+<p>SS &lt;- lm(points ~ attitude + stra + surf, data = AA) summary(SS) FF &lt;- lm(points ~ attitude, data = AA) summary(FF)</p>
+</div>
+<div id="i-choose-attitude-stra-and-surf-as-explanatory-variables.-p-values-for-stra-and-surf-had-p0.05-and-thus-low-statistical-relation-with-these-variables-and-points.-1" class="section level1">
+<h1>I choose attitude, stra and surf as explanatory variables. P values for stra and surf had p&gt;0.05 and thus low statistical relation with these variables and points.</h1>
+</div>
+<div id="these-two-were-excluded-and-simple-regression-with-points-and-attitude-are-shown-below.-1" class="section level1">
+<h1>These two were excluded and simple regression with points and attitude are shown below.</h1>
+</div>
+<div id="fitted-model-there-seems-to-be-statictically-significant-low-p-value-relation-between-points-and-attitude.-1" class="section level1">
+<h1>fitted model: there seems to be statictically significant (low P value) relation between points and attitude.</h1>
+</div>
+<div id="i-learnt-the-following-about-r-squared-from-the-internet-today-1" class="section level1">
+<h1>I learnt the following about R-squared from the internet today:</h1>
+</div>
+<div id="r-squared-is-the-percentage-of-the-dependent-variable-variation-that-a-linear-model-explains.-1" class="section level1">
+<h1>R-squared is the percentage of the dependent variable variation that a linear model explains.</h1>
+<p>#100% represents a model that explains all of the variation in the response variable around its mean. # Adjusted R-squared provides the same information as R-squared but adjusts for the number of terms in the model. #plot command makes the following diagnostic plots and par command puts them on the same page.</p>
+<p>par(mfrow = c(2,2)) plot(SS, which = c(1,2,5)) E &lt;- lm(points ~ attitude + stra + surf, data = AA) par(mfrow = c(2,2)) plot(E, which = c(1,2,5))</p>
+</div>
+<div id="q-q-plot-shows-that-both-genders-have-same-distribution.-1" class="section level1">
+<h1>Q-Q plot shows that both genders have same distribution.</h1>
+</div>
+<div id="residuals-vs-fitted-residuals-observed-value-fitted-value.-y-axis-residual-x-axis-fitted-values.-unwanted-patterns-of-this-plot-we-cant-trust-the-test.-the-shouldt-be-patterns.-you-shouldnt-be-able-to-predict-the-residual-with-fitted-value-if-the-data-is-truly-random.-1" class="section level1">
+<h1>residuals Vs fitted: Residuals = Observed value – Fitted value. Y-axis= residual, X-axis= fitted values. Unwanted patterns of this plot = we can’t trust the test. The should’t be patterns. You shouldn’t be able to predict the residual with fitted value, if the data is truly random.</h1>
+</div>
+<div id="residuals-vs-leverage-can-also-be-used-to-detect-heteroskedasticity-and-non-linearity.-second-points-with-high-leverage-may-be-influential-that-is-deleting-them-would-change-the-model-a-lot.-points-outside-cooks-distance-have-high-influence.-1" class="section level1">
+<h1>residuals vs leverage: can also be used to detect heteroskedasticity and non-linearity. Second, points with high leverage may be influential: that is, deleting them would change the model a lot. Points outside Cook’s distance have high influence.</h1>
+</div>
+<div id="now-there-are-few-points-outside-cooks-distance-that-could-affect-leverage-and-the-model.-1" class="section level1">
+<h1>Now there are few points outside Cook’s distance, that could affect leverage and the model.</h1>
 <hr />
 <p>(more chapters to be added similarly as we proceed with the course!)</p>
 </div>

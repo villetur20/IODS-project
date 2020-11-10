@@ -466,6 +466,17 @@ summary {
 <li><a href="#residuals-vs-fitted-residuals-observed-value-fitted-value.-y-axis-residual-x-axis-fitted-values.-unwanted-patterns-of-this-plot-we-cant-trust-the-test.-the-shouldt-be-patterns.-you-shouldnt-be-able-to-predict-the-residual-with-fitted-value-if-the-data-is-truly-random.-1">residuals Vs fitted: Residuals = Observed value – Fitted value. Y-axis= residual, X-axis= fitted values. Unwanted patterns of this plot = we can’t trust the test. The should’t be patterns. You shouldn’t be able to predict the residual with fitted value, if the data is truly random.</a></li>
 <li><a href="#residuals-vs-leverage-can-also-be-used-to-detect-heteroskedasticity-and-non-linearity.-second-points-with-high-leverage-may-be-influential-that-is-deleting-them-would-change-the-model-a-lot.-points-outside-cooks-distance-have-high-influence.-1">residuals vs leverage: can also be used to detect heteroskedasticity and non-linearity. Second, points with high leverage may be influential: that is, deleting them would change the model a lot. Points outside Cook’s distance have high influence.</a></li>
 <li><a href="#now-there-are-few-points-outside-cooks-distance-that-could-affect-leverage-and-the-model.-1">Now there are few points outside Cook’s distance, that could affect leverage and the model.</a></li>
+<li><a href="#week3-analysis-exercise-ville-turppo-10.11.2020">Week3 Analysis exercise, Ville Turppo 10.11.2020</a></li>
+<li><a href="#reading-the-data-to-r.-taking-it-from-the-internet-incase-i-have-made-some-mistakes-before.-colnames-command-to-see-the-variable-names.">Reading the data to R. Taking it from the internet incase I have made some mistakes before. Colnames command to see the variable names.</a></li>
+<li><a href="#dim-command-shows-that-there-are-382-rows-participants-and-35-variables.">dim command shows that there are 382 rows = participants and 35 variables.</a></li>
+<li><a href="#logistic-regression-for-factors-relating-to-higher-alcohol-consumption.i-choose-to-use-sex-absencesfailures-and-address.">Logistic regression for factors relating to higher alcohol consumption.I choose to use sex, absences,failures and address.</a></li>
+<li><a href="#my-hypothesis-alco-absences-and-failures-are-related.-alco-sex-and-address-are-not-related.">my hypothesis: alco, absences and failures are related. Alco, sex and address are not related.</a></li>
+<li><a href="#extracting-coefficients-and-then-intrepeting-them-ass-odds-rations">extracting coefficients and then intrepeting them ass Odds rations</a></li>
+<li><a href="#this-is-also-my-answer-to-question-number-5-logistic-regression-and-its-interpretation">this is also my answer to question number 5 (logistic regression and its interpretation)</a></li>
+<li><a href="#i-would-intepret-the-results-as-sex-is-the-most-related-to-high-use-then-failures-absences-and-adress-the-further-or-from-zero-the-more-relation-there-is.">I would intepret the results as: Sex is the most related to high use, then failures, absences and adress = the further OR from zero, the more relation there is.</a></li>
+<li><a href="#next-box-plots-for">NEXT BOX-plots for</a></li>
+<li><a href="#intepretation-of-crosstabs-and-a-boxplot.">Intepretation of crosstabs and a boxplot.</a></li>
+<li><a href="#i-only-managed-to-make-boxplot-with-highuse-and-absences-seem-that-those-with-high-use-have-more-absences.-with-crosstabs-higher-alco-use-doesnt-mean-more-failures.-whereas-men-seem-to-have-higher-alco-use-and-also-students-living-in-urban-areas">I only managed to make boxplot with highuse and absences, seem that those with high use have more absences. With crosstabs higher alco use doesn’t mean more failures. Whereas men seem to have higher alco use and also students living in urban areas</a></li>
 </ul>
 </div>
 
@@ -553,7 +564,7 @@ summary {
 <li>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</li>
 </ul>
 <pre class="r"><code>date()</code></pre>
-<pre><code>## [1] &quot;Wed Nov 04 21:39:34 2020&quot;</code></pre>
+<pre><code>## [1] &quot;Tue Nov 10 22:30:45 2020&quot;</code></pre>
 <p>Here we go again… # Here I’m opening the data from the internet. Sep tells R the seperator used in the data, header means there is a header.</p>
 <p>AA &lt;- read.table(“<a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt" class="uri">http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt</a>”, sep = “,”, header = TRUE) str(AA) dim(AA)</p>
 </div>
@@ -602,6 +613,50 @@ summary {
 <h1>Now there are few points outside Cook’s distance, that could affect leverage and the model.</h1>
 <hr />
 <p>(more chapters to be added similarly as we proceed with the course!)</p>
+</div>
+<div id="week3-analysis-exercise-ville-turppo-10.11.2020" class="section level1">
+<h1>Week3 Analysis exercise, Ville Turppo 10.11.2020</h1>
+</div>
+<div id="reading-the-data-to-r.-taking-it-from-the-internet-incase-i-have-made-some-mistakes-before.-colnames-command-to-see-the-variable-names." class="section level1">
+<h1>Reading the data to R. Taking it from the internet incase I have made some mistakes before. Colnames command to see the variable names.</h1>
+<p>AA &lt;- read.table(“<a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt" class="uri">http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt</a>”, sep = “,” , header = TRUE)</p>
+<p>colnames(AA)</p>
+</div>
+<div id="dim-command-shows-that-there-are-382-rows-participants-and-35-variables." class="section level1">
+<h1>dim command shows that there are 382 rows = participants and 35 variables.</h1>
+<p>dim (AA)</p>
+</div>
+<div id="logistic-regression-for-factors-relating-to-higher-alcohol-consumption.i-choose-to-use-sex-absencesfailures-and-address." class="section level1">
+<h1>Logistic regression for factors relating to higher alcohol consumption.I choose to use sex, absences,failures and address.</h1>
+</div>
+<div id="my-hypothesis-alco-absences-and-failures-are-related.-alco-sex-and-address-are-not-related." class="section level1">
+<h1>my hypothesis: alco, absences and failures are related. Alco, sex and address are not related.</h1>
+<p>m &lt;- glm(high_use ~ failures + absences + sex + address, data = AA, family = “binomial”)</p>
+</div>
+<div id="extracting-coefficients-and-then-intrepeting-them-ass-odds-rations" class="section level1">
+<h1>extracting coefficients and then intrepeting them ass Odds rations</h1>
+<p>OR &lt;- coef(m) %&gt;% exp</p>
+<p>#computing confidence intervals CI &lt;- confint(m) %&gt;% exp</p>
+<p>#Printing Odds Rations and confidence intrevals cbind(OR, CI)</p>
+</div>
+<div id="this-is-also-my-answer-to-question-number-5-logistic-regression-and-its-interpretation" class="section level1">
+<h1>this is also my answer to question number 5 (logistic regression and its interpretation)</h1>
+</div>
+<div id="i-would-intepret-the-results-as-sex-is-the-most-related-to-high-use-then-failures-absences-and-adress-the-further-or-from-zero-the-more-relation-there-is." class="section level1">
+<h1>I would intepret the results as: Sex is the most related to high use, then failures, absences and adress = the further OR from zero, the more relation there is.</h1>
+<p>library(tidyr) library(dplyr); library(ggplot2) #installed the packages</p>
+</div>
+<div id="next-box-plots-for" class="section level1">
+<h1>NEXT BOX-plots for</h1>
+<p>g1 &lt;- ggplot(alc, aes(x = high_use, y = sex)) g2 &lt;- ggplot(alc, aes(x = high_use, y = absences)) g3 &lt;- ggplot(alc, aes(x = high_use, y = failures)) g4 &lt;- ggplot(alc, aes(x = high_use, y = address))</p>
+<p>g1 + geom_boxplot() + ggtitle(“Student sex by alcohol consumption and sex”) g2 + geom_boxplot() + ggtitle(“Student absences by alcohol consumption and sex”) g3 + geom_boxplot() + ggtitle(“Student failing recent classes by alcohol consumption and sex”) g4 + geom_boxplot() + ggtitle(“Student address by alcohol consumption and sex”)</p>
+<p>FAIL2 &lt;- table(AA<span class="math inline">\(failures, AA\)</span>high_use) FAIL FAIL2 seex &lt;- table(AA<span class="math inline">\(sex, AA\)</span>high_use) seex add &lt;- table(AA<span class="math inline">\(address, AA\)</span>high_use) add</p>
+</div>
+<div id="intepretation-of-crosstabs-and-a-boxplot." class="section level1">
+<h1>Intepretation of crosstabs and a boxplot.</h1>
+</div>
+<div id="i-only-managed-to-make-boxplot-with-highuse-and-absences-seem-that-those-with-high-use-have-more-absences.-with-crosstabs-higher-alco-use-doesnt-mean-more-failures.-whereas-men-seem-to-have-higher-alco-use-and-also-students-living-in-urban-areas" class="section level1">
+<h1>I only managed to make boxplot with highuse and absences, seem that those with high use have more absences. With crosstabs higher alco use doesn’t mean more failures. Whereas men seem to have higher alco use and also students living in urban areas</h1>
 </div>
 
 

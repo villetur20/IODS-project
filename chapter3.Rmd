@@ -1,0 +1,57 @@
+---
+title: "chapter3.Rmd"
+output: html_document
+---
+# Week3 Analysis exercise, Ville Turppo 10.11.2020
+
+# Reading the data to R. Taking it from the internet incase I have made some mistakes before. Colnames command to see the variable names.
+
+AA <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/alc.txt", sep = "," , header = TRUE)
+
+colnames(AA)
+
+# dim command shows that there are 382 rows = participants and 35 variables.
+dim (AA)
+
+# Logistic regression for factors relating to higher alcohol consumption.I choose to use sex, absences,failures and address.
+# my hypothesis: alco, absences and failures are related. Alco, sex and address are not related.
+
+m <- glm(high_use ~ failures + absences + sex + address, data = AA, family = "binomial")
+
+# extracting coefficients and then intrepeting them ass Odds rations
+OR <- coef(m) %>% exp
+
+#computing confidence intervals
+CI <- confint(m) %>% exp
+
+#Printing Odds Rations and confidence intrevals
+cbind(OR, CI)
+
+# this is also my answer to question number 5 (logistic regression and its interpretation)
+# I would intepret the results as: Sex is the most related to high use, then failures, absences and adress = the further OR from zero, the more relation there is.
+
+library(tidyr)
+library(dplyr); library(ggplot2)
+#installed the packages
+
+# NEXT BOX-plots for 
+g1 <- ggplot(alc, aes(x = high_use, y = sex))
+g2 <- ggplot(alc, aes(x = high_use, y = absences))
+g3 <- ggplot(alc, aes(x = high_use, y = failures))
+g4 <- ggplot(alc, aes(x = high_use, y = address))
+
+g1 + geom_boxplot() + ggtitle("Student sex by alcohol consumption and sex")
+g2 + geom_boxplot() + ggtitle("Student absences by alcohol consumption and sex")
+g3 + geom_boxplot() + ggtitle("Student failing recent classes by alcohol consumption and sex")
+g4 + geom_boxplot() + ggtitle("Student address by alcohol consumption and sex")
+
+FAIL2 <- table(AA$failures, AA$high_use)
+FAIL
+FAIL2
+seex <- table(AA$sex, AA$high_use)
+seex
+add <- table(AA$address, AA$high_use)
+add
+
+# Intepretation of crosstabs and a boxplot. 
+# I only managed to make boxplot with highuse and absences, seem that those with high use have more absences. With crosstabs higher alco use doesn't mean more failures. Whereas men seem to have higher alco use and also students living in urban areas

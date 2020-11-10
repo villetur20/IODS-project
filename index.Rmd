@@ -138,4 +138,4 @@ plot(E, which = c(1,2,5))
 ***
 
 (more chapters to be added similarly as we proceed with the course!)
-
+```{r child = "chapter3.Rmd"}

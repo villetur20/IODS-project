@@ -35,10 +35,10 @@ library(dplyr); library(ggplot2)
 #installed the packages
 
 # NEXT BOX-plots for 
-g1 <- ggplot(alc, aes(x = high_use, y = sex))
-g2 <- ggplot(alc, aes(x = high_use, y = absences))
-g3 <- ggplot(alc, aes(x = high_use, y = failures))
-g4 <- ggplot(alc, aes(x = high_use, y = address))
+g1 <- ggplot(AA, aes(x = high_use, y = sex))
+g2 <- ggplot(AA, aes(x = high_use, y = absences))
+g3 <- ggplot(AA, aes(x = high_use, y = failures))
+g4 <- ggplot(AA, aes(x = high_use, y = address))
 
 g1 + geom_boxplot() + ggtitle("Student sex by alcohol consumption and sex")
 g2 + geom_boxplot() + ggtitle("Student absences by alcohol consumption and sex")
@@ -55,3 +55,48 @@ add
 
 # Intepretation of crosstabs and a boxplot. 
 # I only managed to make boxplot with highuse and absences, seem that those with high use have more absences. With crosstabs higher alco use doesn't mean more failures. Whereas men seem to have higher alco use and also students living in urban areas
+
+
+
+# New model for the predictions. Sex, absences and failures are inlcuded variables, since OR > 1.0.
+X <- glm(high_use ~ failures + absences + sex, data = AA, family = "binomial")
+
+# Predicting the probability of high_use
+probabilities <- predict(X, type = "response")
+
+#Adding the predicted probalities to data AA
+AA <- mutate(AA, probability = probabilities)
+
+# Using the probabilities to predict high_use
+AA <- mutate(AA, prediction = probability > 0.5)
+
+#making Crosstabulation of the target variable vs predictions
+table(high_use = AA$high_use, prediction = AA$prediction)
+
+# Plotting the same results
+g <- ggplot(AA, aes(x = probability, y = high_use, col = prediction))
+g + geom_point()
+
+# As seen in both, the crosstabs and the plot. Lot of FALSE predictions were infact TRUE. FALSE predictions were more accurate since only 12 real FALSEs were predicted as high use.
+# Sensitivity 26/112 * 100 = 23% and Specifity 258/270 *100 = 96%. Meaning the model is not good in predicting high alcohol use.
+
+
+# Bonus 10-fold cross-validation
+# define a loss function (average prediction error)
+
+loss_func <- function(class, prob) {
+  n_wrong <- abs(class - prob) > 0.5
+  mean(n_wrong)
+}
+# The average number of wrong predictions in the data
+loss_func(class = AA$high_use, prob = AA$probability)
+
+# K-fold cross-validation
+library(boot)
+CS <- cv.glm(data = AA, cost = loss_func, glmfit = X, K = 10)
+
+# average number of wrong predictions in the cross validation
+CS$delta[1]
+
+# Seems that I'm doing something wrong, since not getting any answers
+

@@ -477,6 +477,17 @@ summary {
 <li><a href="#next-box-plots-for">NEXT BOX-plots for</a></li>
 <li><a href="#intepretation-of-crosstabs-and-a-boxplot.">Intepretation of crosstabs and a boxplot.</a></li>
 <li><a href="#i-only-managed-to-make-boxplot-with-highuse-and-absences-seem-that-those-with-high-use-have-more-absences.-with-crosstabs-higher-alco-use-doesnt-mean-more-failures.-whereas-men-seem-to-have-higher-alco-use-and-also-students-living-in-urban-areas">I only managed to make boxplot with highuse and absences, seem that those with high use have more absences. With crosstabs higher alco use doesn’t mean more failures. Whereas men seem to have higher alco use and also students living in urban areas</a></li>
+<li><a href="#new-model-for-the-predictions.-sex-absences-and-failures-are-inlcuded-variables-since-or-1.0.">New model for the predictions. Sex, absences and failures are inlcuded variables, since OR &gt; 1.0.</a></li>
+<li><a href="#predicting-the-probability-of-high_use">Predicting the probability of high_use</a></li>
+<li><a href="#using-the-probabilities-to-predict-high_use">Using the probabilities to predict high_use</a></li>
+<li><a href="#plotting-the-same-results">Plotting the same results</a></li>
+<li><a href="#as-seen-in-both-the-crosstabs-and-the-plot.-lot-of-false-predictions-were-infact-true.-false-predictions-were-more-accurate-since-only-12-real-falses-were-predicted-as-high-use.">As seen in both, the crosstabs and the plot. Lot of FALSE predictions were infact TRUE. FALSE predictions were more accurate since only 12 real FALSEs were predicted as high use.</a></li>
+<li><a href="#sensitivity-26112-100-23-and-specifity-258270-100-96.-meaning-the-model-is-not-good-in-predicting-high-alcohol-use.">Sensitivity 26/112 * 100 = 23% and Specifity 258/270 *100 = 96%. Meaning the model is not good in predicting high alcohol use.</a></li>
+<li><a href="#bonus-10-fold-cross-validation">Bonus 10-fold cross-validation</a></li>
+<li><a href="#define-a-loss-function-average-prediction-error">define a loss function (average prediction error)</a></li>
+<li><a href="#k-fold-cross-validation">K-fold cross-validation</a></li>
+<li><a href="#average-number-of-wrong-predictions-in-the-cross-validation">average number of wrong predictions in the cross validation</a></li>
+<li><a href="#seems-that-im-doing-something-wrong-since-not-getting-any-answers">Seems that I’m doing something wrong, since not getting any answers</a></li>
 </ul>
 </div>
 
@@ -564,7 +575,7 @@ summary {
 <li>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</li>
 </ul>
 <pre class="r"><code>date()</code></pre>
-<pre><code>## [1] &quot;Tue Nov 10 22:30:45 2020&quot;</code></pre>
+<pre><code>## [1] &quot;Thu Nov 12 20:12:09 2020&quot;</code></pre>
 <p>Here we go again… # Here I’m opening the data from the internet. Sep tells R the seperator used in the data, header means there is a header.</p>
 <p>AA &lt;- read.table(“<a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt" class="uri">http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt</a>”, sep = “,”, header = TRUE) str(AA) dim(AA)</p>
 </div>
@@ -648,7 +659,7 @@ summary {
 </div>
 <div id="next-box-plots-for" class="section level1">
 <h1>NEXT BOX-plots for</h1>
-<p>g1 &lt;- ggplot(alc, aes(x = high_use, y = sex)) g2 &lt;- ggplot(alc, aes(x = high_use, y = absences)) g3 &lt;- ggplot(alc, aes(x = high_use, y = failures)) g4 &lt;- ggplot(alc, aes(x = high_use, y = address))</p>
+<p>g1 &lt;- ggplot(AA, aes(x = high_use, y = sex)) g2 &lt;- ggplot(AA, aes(x = high_use, y = absences)) g3 &lt;- ggplot(AA, aes(x = high_use, y = failures)) g4 &lt;- ggplot(AA, aes(x = high_use, y = address))</p>
 <p>g1 + geom_boxplot() + ggtitle(“Student sex by alcohol consumption and sex”) g2 + geom_boxplot() + ggtitle(“Student absences by alcohol consumption and sex”) g3 + geom_boxplot() + ggtitle(“Student failing recent classes by alcohol consumption and sex”) g4 + geom_boxplot() + ggtitle(“Student address by alcohol consumption and sex”)</p>
 <p>FAIL2 &lt;- table(AA<span class="math inline">\(failures, AA\)</span>high_use) FAIL FAIL2 seex &lt;- table(AA<span class="math inline">\(sex, AA\)</span>high_use) seex add &lt;- table(AA<span class="math inline">\(address, AA\)</span>high_use) add</p>
 </div>
@@ -657,6 +668,48 @@ summary {
 </div>
 <div id="i-only-managed-to-make-boxplot-with-highuse-and-absences-seem-that-those-with-high-use-have-more-absences.-with-crosstabs-higher-alco-use-doesnt-mean-more-failures.-whereas-men-seem-to-have-higher-alco-use-and-also-students-living-in-urban-areas" class="section level1">
 <h1>I only managed to make boxplot with highuse and absences, seem that those with high use have more absences. With crosstabs higher alco use doesn’t mean more failures. Whereas men seem to have higher alco use and also students living in urban areas</h1>
+</div>
+<div id="new-model-for-the-predictions.-sex-absences-and-failures-are-inlcuded-variables-since-or-1.0." class="section level1">
+<h1>New model for the predictions. Sex, absences and failures are inlcuded variables, since OR &gt; 1.0.</h1>
+<p>X &lt;- glm(high_use ~ failures + absences + sex, data = AA, family = “binomial”)</p>
+</div>
+<div id="predicting-the-probability-of-high_use" class="section level1">
+<h1>Predicting the probability of high_use</h1>
+<p>probabilities &lt;- predict(X, type = “response”)</p>
+<p>#Adding the predicted probalities to data AA AA &lt;- mutate(AA, probability = probabilities)</p>
+</div>
+<div id="using-the-probabilities-to-predict-high_use" class="section level1">
+<h1>Using the probabilities to predict high_use</h1>
+<p>AA &lt;- mutate(AA, prediction = probability &gt; 0.5)</p>
+<p>#making Crosstabulation of the target variable vs predictions table(high_use = AA<span class="math inline">\(high_use, prediction = AA\)</span>prediction)</p>
+</div>
+<div id="plotting-the-same-results" class="section level1">
+<h1>Plotting the same results</h1>
+<p>g &lt;- ggplot(AA, aes(x = probability, y = high_use, col = prediction)) g + geom_point()</p>
+</div>
+<div id="as-seen-in-both-the-crosstabs-and-the-plot.-lot-of-false-predictions-were-infact-true.-false-predictions-were-more-accurate-since-only-12-real-falses-were-predicted-as-high-use." class="section level1">
+<h1>As seen in both, the crosstabs and the plot. Lot of FALSE predictions were infact TRUE. FALSE predictions were more accurate since only 12 real FALSEs were predicted as high use.</h1>
+</div>
+<div id="sensitivity-26112-100-23-and-specifity-258270-100-96.-meaning-the-model-is-not-good-in-predicting-high-alcohol-use." class="section level1">
+<h1>Sensitivity 26/112 * 100 = 23% and Specifity 258/270 *100 = 96%. Meaning the model is not good in predicting high alcohol use.</h1>
+</div>
+<div id="bonus-10-fold-cross-validation" class="section level1">
+<h1>Bonus 10-fold cross-validation</h1>
+</div>
+<div id="define-a-loss-function-average-prediction-error" class="section level1">
+<h1>define a loss function (average prediction error)</h1>
+<p>loss_func &lt;- function(class, prob) { n_wrong &lt;- abs(class - prob) &gt; 0.5 mean(n_wrong) } # The average number of wrong predictions in the data loss_func(class = AA<span class="math inline">\(high_use, prob = AA\)</span>probability)</p>
+</div>
+<div id="k-fold-cross-validation" class="section level1">
+<h1>K-fold cross-validation</h1>
+<p>library(boot) CS &lt;- cv.glm(data = AA, cost = loss_func, glmfit = X, K = 10)</p>
+</div>
+<div id="average-number-of-wrong-predictions-in-the-cross-validation" class="section level1">
+<h1>average number of wrong predictions in the cross validation</h1>
+<p>CS$delta[1]</p>
+</div>
+<div id="seems-that-im-doing-something-wrong-since-not-getting-any-answers" class="section level1">
+<h1>Seems that I’m doing something wrong, since not getting any answers</h1>
 </div>
 
 

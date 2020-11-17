@@ -26,9 +26,9 @@ pairs(Boston)
 library(corrplot)
 cor_matrix<-cor(Boston) %>% round(digits = 2)
 cor_matrix
-```{r}
 corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.cex = 0.6)
-```
+
+
 #The correlation plot shows the correlations between variables. The bigger circles the more correlation. Blue color for positive and Red for negative correlation.
 
 # 4) scaling the data: Standardizing variables and the summary. Plus Changing the object to dataframe.
@@ -71,17 +71,16 @@ lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "orange", tex 
   text(myscale * heads[,choices], labels = row.names(heads), 
        cex = tex, col=color, pos=3)
 }
-```{r}
+
 plot(lda.fit, dimen = 2, col = classes, pch = classes)
 lda.arrows(lda.fit, myscale = 1)
-```
+
 
 # 6 Predicting classes. Seems that the low and High classes macth well, whereas the medium classes are not that well predicted.
 
 lda.pred <- predict(lda.fit, newdata = test)
-```{r}
 table(correct = correct_classes, predicted = lda.pred$class)
-```
+
 #7 Reloading dataset and standardizing. Distances, K-means
 library(MASS)
 data("Boston")
@@ -102,9 +101,8 @@ k_max <- 10
 twcss <- sapply(1:k_max, function(k){kmeans(scaled2, k)$tot.withinss})
 qplot(x = 1:k_max, y = twcss, geom = 'line')
 m <-kmeans(scaled2, centers = 2)
-```{r}
 pairs(Boston, col = m$cluster)
-```
+
 # Interpretation: For example Crime vs AGE, lstat,medv: Higher age, higher proportion of low status population and lower value of homes seem to lead to higher crimerate.
 
 

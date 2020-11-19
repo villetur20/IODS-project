@@ -5,27 +5,39 @@ output: html_document
 # Week 4: Ville Turppo 15.11.2020
 
 # Installing the MASS package, opening libraries and then loading the data.
+
 library(MASS)
+
 library(ggplot2)
+
 library(dplyr)
+
 data("Boston")
 
 # 2) Exploring the data: There are 506 observations and 14 variables. Variablenames also shown below. Summary shows: mean,median,25th and 75th quartiles,min,max.
 
 dim(Boston)
+
 str(Boston)
+
 variable.names(Boston)
 
 #Graphical and summary summary: mean,median,25th and 75th quartiles,min,max.
+
 summary(Boston)
+
 pairs(Boston)
+
 # It seems that e.g. crimrerate is higher when people live in older houses, when pupil-teacher ratio is bigger and when the houses are cheaper.
 
 # 3) Corrplot library for the next plots of graphical view.
 
 library(corrplot)
+
 cor_matrix<-cor(Boston) %>% round(digits = 2)
+
 cor_matrix
+
 corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.cex = 0.6)
 
 
@@ -34,35 +46,52 @@ corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.c
 # 4) scaling the data: Standardizing variables and the summary. Plus Changing the object to dataframe.
 
 boston_scaled <- scale(Boston)
+
 summary(boston_scaled)
+
 boston_scaled <- as.data.frame(boston_scaled)
 
 # Now all means = 0 and the values are "closer" each other. E.g. before "age" max was 100.00 and now it is 1.11. Compared to "dis" max 12.1 and 3.96. The variables are now better compareable.
+
 library(tidyr)
 
 # Categorical variable of the crime rate. And removing the old crim variable.
+
 summary(boston_scaled$crim)
 
 # Breakpoints for the new crim and making new "crime" variable and naming the categories.
+
 bins <- quantile(boston_scaled$crim)
-crime <- cut(boston_scaled$crim, breaks = bins, include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
+
+crime <- cut(boston_scaled$crim, breaks = bins, 
+include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
 
 # Removing "crim" and Adding the "crime" to the data
+
 boston_scaled <- dplyr::select(boston_scaled, -crim)
+
 boston_scaled <- data.frame(boston_scaled, crime)
 
 # Finally dividing the data to test and train sets
+
 n <- nrow(boston_scaled)
+
 ind <- sample(n,  size = n * 0.8)
+
 train <- boston_scaled[ind,]
+
 test <- boston_scaled[-ind,]
+
 correct_classes <- test$crime
+
 test <- dplyr::select(test, -crime)
 
 # 5) Linear Discriminant analysis on the train set, changing to numeric values and drawing a plot
 
 lda.fit <- lda(crime ~ ., data = train)
+
 classes <- as.numeric(train$crime)
+
 lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "orange", tex = 0.75, choices = c(1,2)){
   heads <- coef(x)
   arrows(x0 = 0, y0 = 0, 
@@ -79,28 +108,41 @@ lda.arrows(lda.fit, myscale = 1)
 # 6 Predicting classes. Seems that the low and High classes macth well, whereas the medium classes are not that well predicted.
 
 lda.pred <- predict(lda.fit, newdata = test)
+
 table(correct = correct_classes, predicted = lda.pred$class)
 
 #7 Reloading dataset and standardizing. Distances, K-means
+
 library(MASS)
+
 data("Boston")
 
 # Scaling the data to "scaled2" and then taking the euclidean distance matrix.
+
 scaled2 <- scale(Boston)
+
 summary(scaled2)
+
 dist_eu <- dist(scaled2)
+
 summary(dist_eu)
 
 # K-mean clustering, first K-means clustering, then plotting.
+
 k <-kmeans(scaled2, centers = 4)
 pairs(scaled2, col = k$cluster)
 
 # K-means again with adjustments with plots
+
 set.seed(123)
+
 k_max <- 10
+
 twcss <- sapply(1:k_max, function(k){kmeans(scaled2, k)$tot.withinss})
 qplot(x = 1:k_max, y = twcss, geom = 'line')
+
 m <-kmeans(scaled2, centers = 2)
+
 pairs(Boston, col = m$cluster)
 
 # Interpretation: For example Crime vs AGE, lstat,medv: Higher age, higher proportion of low status population and lower value of homes seem to lead to higher crimerate.

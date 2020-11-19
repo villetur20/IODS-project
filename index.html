@@ -491,6 +491,7 @@ summary {
 <li><a href="#week-4-ville-turppo-15.11.2020">Week 4: Ville Turppo 15.11.2020</a></li>
 <li><a href="#installing-the-mass-package-opening-libraries-and-then-loading-the-data.">Installing the MASS package, opening libraries and then loading the data.</a></li>
 <li><a href="#exploring-the-data-there-are-506-observations-and-14-variables.-variablenames-also-shown-below.-summary-shows-meanmedian25th-and-75th-quartilesminmax.">2) Exploring the data: There are 506 observations and 14 variables. Variablenames also shown below. Summary shows: mean,median,25th and 75th quartiles,min,max.</a></li>
+<li><a href="#it-seems-that-e.g.-crimrerate-is-higher-when-people-live-in-older-houses-when-pupil-teacher-ratio-is-bigger-and-when-the-houses-are-cheaper.">It seems that e.g. crimrerate is higher when people live in older houses, when pupil-teacher ratio is bigger and when the houses are cheaper.</a></li>
 <li><a href="#corrplot-library-for-the-next-plots-of-graphical-view.">3) Corrplot library for the next plots of graphical view.</a></li>
 <li><a href="#scaling-the-data-standardizing-variables-and-the-summary.-plus-changing-the-object-to-dataframe.">4) scaling the data: Standardizing variables and the summary. Plus Changing the object to dataframe.</a></li>
 <li><a href="#now-all-means-0-and-the-values-are-closer-each-other.-e.g.-before-age-max-was-100.00-and-now-it-is-1.11.-compared-to-dis-max-12.1-and-3.96.-the-variables-are-now-better-compareable.">Now all means = 0 and the values are “closer” each other. E.g. before “age” max was 100.00 and now it is 1.11. Compared to “dis” max 12.1 and 3.96. The variables are now better compareable.</a></li>
@@ -591,7 +592,7 @@ summary {
 <li>Assume the reader has no previous knowledge of your data or the more advanced methods you are using.</li>
 </ul>
 <pre class="r"><code>date()</code></pre>
-<pre><code>## [1] &quot;Tue Nov 17 22:59:10 2020&quot;</code></pre>
+<pre><code>## [1] &quot;Thu Nov 19 19:27:23 2020&quot;</code></pre>
 <p>Here we go again… # Here I’m opening the data from the internet. Sep tells R the seperator used in the data, header means there is a header.</p>
 <p>AA &lt;- read.table(“<a href="http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt" class="uri">http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/learning2014.txt</a>”, sep = “,”, header = TRUE) str(AA) dim(AA)</p>
 </div>
@@ -732,21 +733,36 @@ summary {
 </div>
 <div id="installing-the-mass-package-opening-libraries-and-then-loading-the-data." class="section level1">
 <h1>Installing the MASS package, opening libraries and then loading the data.</h1>
-<p>library(MASS) library(ggplot2) library(dplyr) data(“Boston”)</p>
+<p>library(MASS)</p>
+<p>library(ggplot2)</p>
+<p>library(dplyr)</p>
+<p>data(“Boston”)</p>
 </div>
 <div id="exploring-the-data-there-are-506-observations-and-14-variables.-variablenames-also-shown-below.-summary-shows-meanmedian25th-and-75th-quartilesminmax." class="section level1">
 <h1>2) Exploring the data: There are 506 observations and 14 variables. Variablenames also shown below. Summary shows: mean,median,25th and 75th quartiles,min,max.</h1>
-<p>dim(Boston) str(Boston) variable.names(Boston)</p>
-<p>#Graphical and summary summary: mean,median,25th and 75th quartiles,min,max. summary(Boston) pairs(Boston) # It seems that e.g. crimrerate is higher when people live in older houses, when pupil-teacher ratio is bigger and when the houses are cheaper.</p>
+<p>dim(Boston)</p>
+<p>str(Boston)</p>
+<p>variable.names(Boston)</p>
+<p>#Graphical and summary summary: mean,median,25th and 75th quartiles,min,max.</p>
+<p>summary(Boston)</p>
+<p>pairs(Boston)</p>
+</div>
+<div id="it-seems-that-e.g.-crimrerate-is-higher-when-people-live-in-older-houses-when-pupil-teacher-ratio-is-bigger-and-when-the-houses-are-cheaper." class="section level1">
+<h1>It seems that e.g. crimrerate is higher when people live in older houses, when pupil-teacher ratio is bigger and when the houses are cheaper.</h1>
 </div>
 <div id="corrplot-library-for-the-next-plots-of-graphical-view." class="section level1">
 <h1>3) Corrplot library for the next plots of graphical view.</h1>
-<p>library(corrplot) cor_matrix&lt;-cor(Boston) %&gt;% round(digits = 2) cor_matrix corrplot(cor_matrix, method=“circle”, type=“upper”, cl.pos=“b”, tl.pos=“d”, tl.cex = 0.6)</p>
+<p>library(corrplot)</p>
+<p>cor_matrix&lt;-cor(Boston) %&gt;% round(digits = 2)</p>
+<p>cor_matrix</p>
+<p>corrplot(cor_matrix, method=“circle”, type=“upper”, cl.pos=“b”, tl.pos=“d”, tl.cex = 0.6)</p>
 <p>#The correlation plot shows the correlations between variables. The bigger circles the more correlation. Blue color for positive and Red for negative correlation.</p>
 </div>
 <div id="scaling-the-data-standardizing-variables-and-the-summary.-plus-changing-the-object-to-dataframe." class="section level1">
 <h1>4) scaling the data: Standardizing variables and the summary. Plus Changing the object to dataframe.</h1>
-<p>boston_scaled &lt;- scale(Boston) summary(boston_scaled) boston_scaled &lt;- as.data.frame(boston_scaled)</p>
+<p>boston_scaled &lt;- scale(Boston)</p>
+<p>summary(boston_scaled)</p>
+<p>boston_scaled &lt;- as.data.frame(boston_scaled)</p>
 </div>
 <div id="now-all-means-0-and-the-values-are-closer-each-other.-e.g.-before-age-max-was-100.00-and-now-it-is-1.11.-compared-to-dis-max-12.1-and-3.96.-the-variables-are-now-better-compareable." class="section level1">
 <h1>Now all means = 0 and the values are “closer” each other. E.g. before “age” max was 100.00 and now it is 1.11. Compared to “dis” max 12.1 and 3.96. The variables are now better compareable.</h1>
@@ -758,29 +774,44 @@ summary {
 </div>
 <div id="breakpoints-for-the-new-crim-and-making-new-crime-variable-and-naming-the-categories." class="section level1">
 <h1>Breakpoints for the new crim and making new “crime” variable and naming the categories.</h1>
-<p>bins &lt;- quantile(boston_scaled<span class="math inline">\(crim) crime &lt;- cut(boston_scaled\)</span>crim, breaks = bins, include.lowest = TRUE, labels = c(“low”, “med_low”, “med_high”, “high”))</p>
+<p>bins &lt;- quantile(boston_scaled$crim)</p>
+<p>crime &lt;- cut(boston_scaled$crim, breaks = bins, include.lowest = TRUE, labels = c(“low”, “med_low”, “med_high”, “high”))</p>
 </div>
 <div id="removing-crim-and-adding-the-crime-to-the-data" class="section level1">
 <h1>Removing “crim” and Adding the “crime” to the data</h1>
-<p>boston_scaled &lt;- dplyr::select(boston_scaled, -crim) boston_scaled &lt;- data.frame(boston_scaled, crime)</p>
+<p>boston_scaled &lt;- dplyr::select(boston_scaled, -crim)</p>
+<p>boston_scaled &lt;- data.frame(boston_scaled, crime)</p>
 </div>
 <div id="finally-dividing-the-data-to-test-and-train-sets" class="section level1">
 <h1>Finally dividing the data to test and train sets</h1>
-<p>n &lt;- nrow(boston_scaled) ind &lt;- sample(n, size = n * 0.8) train &lt;- boston_scaled[ind,] test &lt;- boston_scaled[-ind,] correct_classes &lt;- test$crime test &lt;- dplyr::select(test, -crime)</p>
+<p>n &lt;- nrow(boston_scaled)</p>
+<p>ind &lt;- sample(n, size = n * 0.8)</p>
+<p>train &lt;- boston_scaled[ind,]</p>
+<p>test &lt;- boston_scaled[-ind,]</p>
+<p>correct_classes &lt;- test$crime</p>
+<p>test &lt;- dplyr::select(test, -crime)</p>
 </div>
 <div id="linear-discriminant-analysis-on-the-train-set-changing-to-numeric-values-and-drawing-a-plot" class="section level1">
 <h1>5) Linear Discriminant analysis on the train set, changing to numeric values and drawing a plot</h1>
-<p>lda.fit &lt;- lda(crime ~ ., data = train) classes &lt;- as.numeric(train$crime) lda.arrows &lt;- function(x, myscale = 1, arrow_heads = 0.1, color = “orange”, tex = 0.75, choices = c(1,2)){ heads &lt;- coef(x) arrows(x0 = 0, y0 = 0, x1 = myscale * heads[,choices[1]], y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads) text(myscale * heads[,choices], labels = row.names(heads), cex = tex, col=color, pos=3) }</p>
+<p>lda.fit &lt;- lda(crime ~ ., data = train)</p>
+<p>classes &lt;- as.numeric(train$crime)</p>
+<p>lda.arrows &lt;- function(x, myscale = 1, arrow_heads = 0.1, color = “orange”, tex = 0.75, choices = c(1,2)){ heads &lt;- coef(x) arrows(x0 = 0, y0 = 0, x1 = myscale * heads[,choices[1]], y1 = myscale * heads[,choices[2]], col=color, length = arrow_heads) text(myscale * heads[,choices], labels = row.names(heads), cex = tex, col=color, pos=3) }</p>
 <p>plot(lda.fit, dimen = 2, col = classes, pch = classes) lda.arrows(lda.fit, myscale = 1)</p>
 </div>
 <div id="predicting-classes.-seems-that-the-low-and-high-classes-macth-well-whereas-the-medium-classes-are-not-that-well-predicted." class="section level1">
 <h1>6 Predicting classes. Seems that the low and High classes macth well, whereas the medium classes are not that well predicted.</h1>
-<p>lda.pred &lt;- predict(lda.fit, newdata = test) table(correct = correct_classes, predicted = lda.pred$class)</p>
-<p>#7 Reloading dataset and standardizing. Distances, K-means library(MASS) data(“Boston”)</p>
+<p>lda.pred &lt;- predict(lda.fit, newdata = test)</p>
+<p>table(correct = correct_classes, predicted = lda.pred$class)</p>
+<p>#7 Reloading dataset and standardizing. Distances, K-means</p>
+<p>library(MASS)</p>
+<p>data(“Boston”)</p>
 </div>
 <div id="scaling-the-data-to-scaled2-and-then-taking-the-euclidean-distance-matrix." class="section level1">
 <h1>Scaling the data to “scaled2” and then taking the euclidean distance matrix.</h1>
-<p>scaled2 &lt;- scale(Boston) summary(scaled2) dist_eu &lt;- dist(scaled2) summary(dist_eu)</p>
+<p>scaled2 &lt;- scale(Boston)</p>
+<p>summary(scaled2)</p>
+<p>dist_eu &lt;- dist(scaled2)</p>
+<p>summary(dist_eu)</p>
 </div>
 <div id="k-mean-clustering-first-k-means-clustering-then-plotting." class="section level1">
 <h1>K-mean clustering, first K-means clustering, then plotting.</h1>
@@ -788,7 +819,11 @@ summary {
 </div>
 <div id="k-means-again-with-adjustments-with-plots" class="section level1">
 <h1>K-means again with adjustments with plots</h1>
-<p>set.seed(123) k_max &lt;- 10 twcss &lt;- sapply(1:k_max, function(k){kmeans(scaled2, k)<span class="math inline">\(tot.withinss}) qplot(x = 1:k_max, y = twcss, geom = &#39;line&#39;) m &lt;-kmeans(scaled2, centers = 2) pairs(Boston, col = m\)</span>cluster)</p>
+<p>set.seed(123)</p>
+<p>k_max &lt;- 10</p>
+<p>twcss &lt;- sapply(1:k_max, function(k){kmeans(scaled2, k)$tot.withinss}) qplot(x = 1:k_max, y = twcss, geom = ‘line’)</p>
+<p>m &lt;-kmeans(scaled2, centers = 2)</p>
+<p>pairs(Boston, col = m$cluster)</p>
 </div>
 <div id="interpretation-for-example-crime-vs-age-lstatmedv-higher-age-higher-proportion-of-low-status-population-and-lower-value-of-homes-seem-to-lead-to-higher-crimerate." class="section level1">
 <h1>Interpretation: For example Crime vs AGE, lstat,medv: Higher age, higher proportion of low status population and lower value of homes seem to lead to higher crimerate.</h1>

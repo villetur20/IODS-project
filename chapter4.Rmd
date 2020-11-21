@@ -4,94 +4,111 @@ output: html_document
 ---
 # Week 4: Ville Turppo 15.11.2020
 
-# Installing the MASS package, opening libraries and then loading the data.
+Installing the MASS package, opening libraries and then loading the data.
 
+```{r}
 library(MASS)
-
 library(ggplot2)
-
 library(dplyr)
-
 data("Boston")
+```
 
-# 2) Exploring the data: There are 506 observations and 14 variables. Variablenames also shown below. Summary shows: mean,median,25th and 75th quartiles,min,max.
 
+
+2) Exploring the data: There are 506 observations and 14 variables. Variablenames also shown below. Summary shows: mean,median,25th and 75th quartiles,min,max.
+
+```{r}
 dim(Boston)
-
 str(Boston)
-
 variable.names(Boston)
+```
 
-#Graphical and summary summary: mean,median,25th and 75th quartiles,min,max.
 
+
+Graphical and summary summary: mean,median,25th and 75th quartiles,min,max.
+
+It seems that e.g. crimrerate is higher when people live in older houses, when pupil-teacher ratio is bigger and when the houses are cheaper.
+
+```{r}
 summary(Boston)
-
 pairs(Boston)
+```
 
-# It seems that e.g. crimrerate is higher when people live in older houses, when pupil-teacher ratio is bigger and when the houses are cheaper.
 
-# 3) Corrplot library for the next plots of graphical view.
 
+3) Corrplot library for the next plots of graphical view.
+
+The correlation plot shows the correlations between variables. The bigger circles the more correlation. Blue color for positive and Red for negative correlation.
+
+```{r}
 library(corrplot)
-
 cor_matrix<-cor(Boston) %>% round(digits = 2)
-
 cor_matrix
-
 corrplot(cor_matrix, method="circle", type="upper", cl.pos="b", tl.pos="d", tl.cex = 0.6)
+```
 
 
-#The correlation plot shows the correlations between variables. The bigger circles the more correlation. Blue color for positive and Red for negative correlation.
 
-# 4) scaling the data: Standardizing variables and the summary. Plus Changing the object to dataframe.
 
+
+
+4) scaling the data: Standardizing variables and the summary. Plus Changing the object to dataframe.
+
+Now all means = 0 and the values are "closer" each other. E.g. before "age" max was 100.00 and now it is 1.11. Compared to "dis" max 12.1 and 3.96. The variables are now better compareable.
+
+```{r}
 boston_scaled <- scale(Boston)
-
 summary(boston_scaled)
-
 boston_scaled <- as.data.frame(boston_scaled)
+```
 
-# Now all means = 0 and the values are "closer" each other. E.g. before "age" max was 100.00 and now it is 1.11. Compared to "dis" max 12.1 and 3.96. The variables are now better compareable.
 
+```{r}
 library(tidyr)
+```
 
-# Categorical variable of the crime rate. And removing the old crim variable.
 
+Categorical variable of the crime rate. And removing the old crim variable.
+```{r}
 summary(boston_scaled$crim)
+```
 
-# Breakpoints for the new crim and making new "crime" variable and naming the categories.
 
+
+Breakpoints for the new crim and making new "crime" variable and naming the categories.
+
+```{r}
 bins <- quantile(boston_scaled$crim)
-
 crime <- cut(boston_scaled$crim, breaks = bins, 
 include.lowest = TRUE, labels = c("low", "med_low", "med_high", "high"))
+```
 
-# Removing "crim" and Adding the "crime" to the data
 
+Removing "crim" and Adding the "crime" to the data
+
+```{r}
 boston_scaled <- dplyr::select(boston_scaled, -crim)
-
 boston_scaled <- data.frame(boston_scaled, crime)
+```
 
-# Finally dividing the data to test and train sets
 
+Finally dividing the data to test and train sets
+
+```{r}
 n <- nrow(boston_scaled)
-
 ind <- sample(n,  size = n * 0.8)
-
 train <- boston_scaled[ind,]
-
 test <- boston_scaled[-ind,]
-
 correct_classes <- test$crime
-
 test <- dplyr::select(test, -crime)
+```
 
-# 5) Linear Discriminant analysis on the train set, changing to numeric values and drawing a plot
 
+5) Linear Discriminant analysis on the train set, changing to numeric values and drawing a plot
+
+```{r}
 lda.fit <- lda(crime ~ ., data = train)
-
 classes <- as.numeric(train$crime)
-
 lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "orange", tex = 0.75, choices = c(1,2)){
   heads <- coef(x)
   arrows(x0 = 0, y0 = 0, 
@@ -103,49 +120,59 @@ lda.arrows <- function(x, myscale = 1, arrow_heads = 0.1, color = "orange", tex 
 
 plot(lda.fit, dimen = 2, col = classes, pch = classes)
 lda.arrows(lda.fit, myscale = 1)
+```
 
 
-# 6 Predicting classes. Seems that the low and High classes macth well, whereas the medium classes are not that well predicted.
 
+6 Predicting classes. Seems that the low and High classes macth well, whereas the medium classes are not that well predicted.
+
+```{r}
 lda.pred <- predict(lda.fit, newdata = test)
-
 table(correct = correct_classes, predicted = lda.pred$class)
+```
 
-#7 Reloading dataset and standardizing. Distances, K-means
 
+7 Reloading dataset and standardizing. Distances, K-means
+
+```{r}
 library(MASS)
-
 data("Boston")
+```
 
-# Scaling the data to "scaled2" and then taking the euclidean distance matrix.
 
+Scaling the data to "scaled2" and then taking the euclidean distance matrix.
+
+```{r}
 scaled2 <- scale(Boston)
-
 summary(scaled2)
-
 dist_eu <- dist(scaled2)
-
 summary(dist_eu)
+```
 
-# K-mean clustering, first K-means clustering, then plotting.
 
+
+K-mean clustering, first K-means clustering, then plotting.
+
+```{r}
 k <-kmeans(scaled2, centers = 4)
 pairs(scaled2, col = k$cluster)
+```
 
-# K-means again with adjustments with plots
 
+K-means again with adjustments with plots
+
+```{r}
 set.seed(123)
-
 k_max <- 10
-
 twcss <- sapply(1:k_max, function(k){kmeans(scaled2, k)$tot.withinss})
 qplot(x = 1:k_max, y = twcss, geom = 'line')
-
 m <-kmeans(scaled2, centers = 2)
-
 pairs(Boston, col = m$cluster)
+```
 
-# Interpretation: For example Crime vs AGE, lstat,medv: Higher age, higher proportion of low status population and lower value of homes seem to lead to higher crimerate.
+
+
+Interpretation: For example Crime vs AGE, lstat,medv: Higher age, higher proportion of low status population and lower value of homes seem to lead to higher crimerate.
 
 
 

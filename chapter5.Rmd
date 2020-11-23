@@ -1,0 +1,71 @@
+---
+title: "chapter5.Rmd"
+output: html_document
+---
+# Week 5 Analysis Ville Turppo
+
+Loading data
+
+```{r}
+library(GGally)
+library(dplyr)
+library(corrplot)
+x <- read.table("http://s3.amazonaws.com/assets.datacamp.com/production/course_2218/datasets/human2.txt", sep = "," , header = TRUE)
+```
+
+
+## 1) Visualizing the data and variable summaries.
+
+```{r}
+ggpairs(x)
+cor(x) %>% corrplot
+summary(x)
+```
+
+## 2) PCA on NOT stadardized data
+
+```{r}
+pca_x <- prcomp(x)
+biplot(pca_x, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
+```
+
+## 3) Standarzizing Human data "x" and then PCA biplotting.
+The results are different. PCA is sensitive to the relative scaling of the original variables. Thus, original variables with larger variances are assumed to be more important.
+
+```{r}
+x_std <- scale(x)
+pca_x_std <- prcomp(x_std)
+biplot(pca_x_std, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
+```
+
+
+Printing out the original and standardized Principal components
+```{r}
+pca_x
+pca_x_std
+```
+
+
+
+## 4) Interpretations
+
+Mat.Mor and Ado.Birth are positively correlated. As are parli and labo.FM. The rest of the variables form the third group of positively correlated variables.
+When the angle between arrows is close to 90, the variables are not correlated, like Mat.Mor and Labo.FM.
+When the angle between arrows is close to 180 degrees. Then the variables are negatively correlated, like Edu.Exp and Mat.Mor.
+
+PC1 and PC2: Mat.Mor and Ado.Birth are pointing towards positive PC1 values,thus, they contribute the most to PC1. Where as, variables like Edu.Exp poit towards PC2 and contribute PC2 positively.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

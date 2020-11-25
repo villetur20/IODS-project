@@ -29,7 +29,7 @@ pca_x <- prcomp(x)
 biplot(pca_x, choices = 1:2, cex = c(0.8, 1), col = c("grey40", "deeppink2"))
 ```
 
-## 3) Standarzizing Human data "x" and then PCA biplotting.
+## 3) Standardizing Human data "x" and then PCA biplotting.
 The results are different. PCA is sensitive to the relative scaling of the original variables. Thus, original variables with larger variances are assumed to be more important.
 
 ```{r}
@@ -57,14 +57,59 @@ PC1 and PC2: Mat.Mor and Ado.Birth are pointing towards positive PC1 values,thus
 
 
 
+## 5) (see the links to the last plots) Opening libraries, checking structure and dimensions. There are 300 observations and 36 variables. 
+
+```{r}
+library(FactoMineR)
+library(ggplot2)
+library(tidyr)
+data("tea")
+str(tea)
+dim(tea)
+```
+
+
+
+### Now reducing the number of variables to 6. Plus dim, str and plotting. Now there are 6 variables with 300 observations. It seems that most drink "Earl Grey" tea in chain stores.
+!!! Somehow, the knit function did not work with the "select(one_of)" That's why I don't have the plot, dim or str printed out here in the diary. Below is the link to the plot.
+
+keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
+
+tea_time <- select(tea, one_of(keep_columns))
+
+gather(tea_time) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free") + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
+
+str(tea_time)
+
+dim(tea_time)
+
+https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/palkit.png
 
 
 
 
+### Multiple Correspondence Analysis (MCA) of the "tea_time"
+
+mca <- MCA(tea_time, graph = FALSE)
+
+summary(mca)
+
+plot(mca, invisible=c("ind"), habillage = "quali")
+
+https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/MCA.png
 
 
 
+### Intepreation:
 
+Summary table
+Eigenvalues: coordinates, variances and % of the variances
+Individuals: coordinates, contribution on the dimension and the squared correalations on dim.
+Categories: Coordinates, contribution. The v.test (if +/- 1.96 the coordinate is significantly different from zero)
+Categorical variables: If the values are close to each other, it indicates strong link between variable and dimension
+
+MCA factor map:
+Similarity: variables close to each other are more similar (e.g. sugar and no sugar). Whereas, more distant variables are not that similar (e.g. chain store and tea shop)
 
 
 

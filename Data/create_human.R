@@ -112,3 +112,4 @@ dim(Ready)
 
 ## Saving the "Ready" to human.csv and overwriting the old data.
 write.table(Ready, file = "C:/Users/ville/OneDrive/Työpöytä/Open science kurssi 2020/IODS-project/data/human.csv", row.names = TRUE)
+

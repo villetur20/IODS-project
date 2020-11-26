@@ -63,14 +63,15 @@ PC1 and PC2: Mat.Mor and Ado.Birth are pointing towards positive PC1 values,thus
 library(FactoMineR)
 library(ggplot2)
 library(tidyr)
+library(dplyr)
 data("tea")
 str(tea)
 dim(tea)
 ```
 
 
-
 ### Now reducing the number of variables to 6. Plus dim, str and plotting. Now there are 6 variables with 300 observations. It seems that most drink "Earl Grey" tea in chain stores.
+
 !!! Somehow, the knit function did not work with the "select(one_of)" That's why I don't have the plot, dim or str printed out here in the diary. Below is the link to the plot.
 
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
@@ -83,6 +84,8 @@ str(tea_time)
 
 dim(tea_time)
 
+Table
+
 https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/palkit.png
 
 
@@ -90,9 +93,12 @@ https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20
 
 ### Multiple Correspondence Analysis (MCA) of the "tea_time"
 
+
 mca <- MCA(tea_time, graph = FALSE)
 
 summary(mca)
+
+https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/sum2.png
 
 plot(mca, invisible=c("ind"), habillage = "quali")
 

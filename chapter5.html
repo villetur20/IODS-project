@@ -543,6 +543,7 @@ biplot(pca_x_std, choices = 1:2, cex = c(0.8, 1), col = c(&quot;grey40&quot;, &q
 <pre class="r"><code>library(FactoMineR)
 library(ggplot2)
 library(tidyr)
+library(dplyr)
 data(&quot;tea&quot;)
 str(tea)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    300 obs. of  36 variables:
@@ -592,12 +593,14 @@ str(tea)</code></pre>
 <p>gather(tea_time) %&gt;% ggplot(aes(value)) + facet_wrap(“key”, scales = “free”) + geom_bar() + theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))</p>
 <p>str(tea_time)</p>
 <p>dim(tea_time)</p>
+<p>Table</p>
 <p><a href="https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/palkit.png" class="uri">https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/palkit.png</a></p>
 </div>
 <div id="multiple-correspondence-analysis-mca-of-the-tea_time" class="section level3">
 <h3>Multiple Correspondence Analysis (MCA) of the “tea_time”</h3>
 <p>mca &lt;- MCA(tea_time, graph = FALSE)</p>
 <p>summary(mca)</p>
+<p><a href="https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/sum2.png" class="uri">https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/sum2.png</a></p>
 <p>plot(mca, invisible=c(“ind”), habillage = “quali”)</p>
 <p><a href="https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/MCA.png" class="uri">https://raw.githubusercontent.com/villetur20/IODS-project/master/Tables%20for%20RMD/MCA.png</a></p>
 </div>

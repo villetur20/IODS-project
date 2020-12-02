@@ -2,7 +2,7 @@
 title: "chapter6.Rmd"
 output: html_document
 ---
-Ville Turppo, week 6
+# Ville Turppo, week 6
 
 
 
@@ -90,13 +90,82 @@ Since P is very small the groups are different.
 
 
 
-2) BPRS data analysis
+## 2) BPRS data analysis
 ```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
 BPRSL <- read.table ("C:/Users/ville/OneDrive/Työpöytä/Open science kurssi 2020/IODS-project/Data/BPRSL.csv")
 BPRSL$treatment <- factor(BPRSL$treatment)
 BPRSL$subject <- factor(BPRSL$subject)
 dim(BPRSL); head(BPRSL); str(BPRSL)
 ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) + geom_line() + scale_linetype_manual(values = rep(1:10, times=4)) + facet_grid(. ~ treatment, labeller = label_both) + theme(legend.position = "none") + scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
 ```
+There are 5 variables now in the data. In the plot it seems that both treatments work, yet, treatment 1 seem better at the end of follow-up.
+Follow-up time was 8 weeks.
 
 
+
+Creating linear multiple regression model of the BPRSL
+
+```{r}
+BPRSL_reg <- lm(bprs ~ week + treatment, data = BPRSL)
+summary(BPRSL_reg)
+```
+This model assumes independence of the repeated measures of bprs, and this assumption is highly unlikely. And this model is not that suitable for this data.
+
+
+
+Random intercept model
+```{r}
+library(lme4)
+BPRSL_ref <- lmer(bprs ~ week + treatment + (1 | subject), data = BPRSL, REML = FALSE)
+summary(BPRSL_ref)
+```
+
+
+Slope model, week and subject as random effects
+```{r}
+library(lme4)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+BPRSL_ref1 <- lmer(bprs ~ week + treatment + (week | subject), data = BPRSL, REML = FALSE)
+summary(BPRSL_ref1)
+anova(BPRSL_ref,BPRSL_ref1)
+```
+
+
+Random Intercept and Random Slope Model with interaction
+
+```{r}
+library(lme4)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+BPRSL_ref2 <- lmer(bprs ~ week * treatment + (week | subject), data = BPRSL, REML = FALSE)
+summary(BPRSL_ref2)
+anova(BPRSL_ref2,BPRSL_ref1)
+
+Fitted <- fitted(BPRSL_ref2)
+BPRSL <- BPRSL %>% mutate(Fitted)
+
+ggplot(BPRSL, aes(x = week, y = bprs, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(min(BPRSL$bprs), max(BPRSL$bprs)))
+
+ggplot(BPRSL, aes(x = week, y = Fitted, linetype = subject)) +
+  geom_line() +
+  scale_linetype_manual(values = rep(1:10, times=4)) +
+  facet_grid(. ~ treatment, labeller = label_both) +
+  theme(legend.position = "none") + 
+  scale_y_continuous(limits = c(min(BPRSL$Fitted), max(BPRSL$Fitted)))
+```
+
+The AIC value in the summaries can be used to compare how well the models fit. Lower AIC = better. The AIC value is better when the greater amount of variation is explained by the model with the fewest possible variables. Using AIC I would say the last model with interaction is the best fitting model. BIC can also been used when choosing models. BIC penalizes model complexity (variables) more than AIC. BIC is lowest for the first model (2768). In all model summaries the is negative correation with weeks and bprs and also treatment and bprs = bprs scores decreasing during time and with treatments.
